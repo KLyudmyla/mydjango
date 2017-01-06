@@ -32,7 +32,7 @@ class RegisterFormView(FormView):
         email_subject = 'Подтверждение регистрации'
         email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
             5 minutes https://djangodeploy.herokuapp.com/accounts/confirm/%s" % (username, activation_key)
-        send_mail(email_subject, email_body, from_email='django@deploy.com', recipient_list=[email], fail_silently=False)
+        send_mail(email_subject, email_body, from_email='kaluzhynoval@gmail.com', recipient_list=[email], fail_silently=False)
         messages.success(request, "For success registered we send you email.\n Please confirm your email", extra_tags='info')
             
         return super(RegisterFormView, self).form_valid(form)
