@@ -122,6 +122,12 @@ USE_TZ = True
 STATIC_URL = "/static_url/"
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'kaluzhynova@gmail.com'
+EMAIL_HOST_PASSWORD = 'meromorphicfunction'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'kaluzhynova@gmail.com'
 
 try:
     from mydjango.local_settings import *
