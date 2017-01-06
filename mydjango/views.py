@@ -5,14 +5,14 @@ from django.shortcuts import render
 import hashlib
 import random
 
-from django.views.generic.edit import FormView
+
 #from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.views.generic.base import View
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
-from .forms import UserCreateForm
+
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.contrib import messages
