@@ -2,6 +2,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from .views import index
 from registrations.views import RegisterFormView, LoginFormView, LogoutView
+from . import views
+
 
 urlpatterns = [
     url(r'^$', index, name='index'),
