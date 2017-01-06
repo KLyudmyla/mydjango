@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^login/$', LoginFormView.as_view(), name = 'login'),
     url(r'^logout/$', LogoutView.as_view(), name = 'logout'),
     url(r'^admin/', admin.site.urls),
+    url(r'^accounts/confirm/(?P<activation_key>\w+)', views.register_confirm,)
 ]
