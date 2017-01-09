@@ -9,8 +9,6 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-#class Meta:
-#verbose_name_plural=u'User profiles'
+class Meta:
+    verbose_name_plural=u'User profiles'
 
-    def __str__(self):
-        return self.username
