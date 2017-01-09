@@ -17,14 +17,14 @@ class UserCreateForm(UserCreationForm):
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Surname'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'})
         }
-    def __init__(self, *args, **kwargs):
-        super(UserCreateForm, self).__init__(*args, **kwargs)
+ #   def __init__(self, *args, **kwargs):
+    #    super(UserCreateForm, self).__init__(*args, **kwargs)
 
-     #   self.fields['username'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['placeholder'] = 'Set password'
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['placeholder'] = 'Confirm password'    
+    
+     #   self.fields['password1'].widget.attrs['class'] = 'form-control'
+     #   self.fields['password1'].widget.attrs['placeholder'] = 'Set password'
+     #   self.fields['password2'].widget.attrs['class'] = 'form-control'
+     #   self.fields['password2'].widget.attrs['placeholder'] = 'Confirm password'    
 
 
     def save(self, commit=True):
