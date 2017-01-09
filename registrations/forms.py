@@ -11,7 +11,7 @@ class UserCreateForm(UserCreationForm):
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
     class Meta:
-        model = User
+        model = Users
         fields = ("username", "first_name", "last_name", "email", "password1", "password2")
         widgets = {
     #        'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Set password'}),
