@@ -7,7 +7,7 @@ from .models import UserProfile
 class UserCreateForm(UserCreationForm):
 #    email = forms.EmailField(required=True)
     class Meta:
-        model = UserProfile
+        model = User
         fields = ("username", "first_name", "last_name", "email", "password1", "password2")
         widgets = {
     #        'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Set password'}),
