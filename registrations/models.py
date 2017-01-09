@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 import datetime
 
 
-class UserProfile(models.Model):
+class Users(models.Model):
 #    user = models.OneToOneField(User)
 #    activation_key = models.CharField(max_length=40, blank=True)
 #    key_expires = models.DateTimeField(default=datetime.date.today())
