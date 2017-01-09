@@ -16,7 +16,7 @@ from django.utils import timezone
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import UserProfile
+#from .models import UserProfile
 
 class RegisterFormView(FormView):
     form_class = UserCreateForm
@@ -64,7 +64,7 @@ def register_confirm(request, activation_key):
         messages.warning(request, 'Bro, you already have logined in, don\'t do it', extra_tags='warning')
         return redirect('index')
         # check if there is UserProfile which matches the activation key (if not then display 404)
-    user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
+    user_profile = get_object_or_404(User, activation_key=activation_key)
     #check if the activation key has expired, if it hase then render confirm_expired.html
     if user_profile.key_expires < timezone.now():
         user_profile.delete()
