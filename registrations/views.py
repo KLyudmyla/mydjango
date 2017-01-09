@@ -64,7 +64,7 @@ def register_confirm(request, activation_key):
         messages.warning(request, 'Bro, you already have logined in, don\'t do it', extra_tags='warning')
         return redirect('index')
         # check if there is UserProfile which matches the activation key (if not then display 404)
-    user_profile = get_object_or_404(User, activation_key=5)
+    user_profile = get_object_or_404(User)
     #check if the activation key has expired, if it hase then render confirm_expired.html
     if user_profile.key_expires < timezone.now():
         user_profile.delete()
