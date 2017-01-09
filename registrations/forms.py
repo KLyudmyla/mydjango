@@ -5,7 +5,11 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Users
 
 class UserCreateForm(UserCreationForm):
-#    email = forms.EmailField(required=True)
+
+    username = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
     class Meta:
         model = User
         fields = ("username", "first_name", "last_name", "email", "password1", "password2")
@@ -17,14 +21,14 @@ class UserCreateForm(UserCreationForm):
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Surname'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'})
         }
- #   def __init__(self, *args, **kwargs):
-    #    super(UserCreateForm, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        super(UserCreateForm, self).__init__(*args, **kwargs)
 
     
-     #   self.fields['password1'].widget.attrs['class'] = 'form-control'
-     #   self.fields['password1'].widget.attrs['placeholder'] = 'Set password'
-     #   self.fields['password2'].widget.attrs['class'] = 'form-control'
-     #   self.fields['password2'].widget.attrs['placeholder'] = 'Confirm password'    
+        self.fields['password1'].widget.attrs['class'] = 'form-control'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Set password'
+        self.fields['password2'].widget.attrs['class'] = 'form-control'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Confirm password'    
 
 
     def save(self, commit=True):
@@ -32,6 +36,7 @@ class UserCreateForm(UserCreationForm):
         user.email = self.cleaned_data["email"]
         user.first_name = self.cleaned_data["first_name"]
         user.last_name = self.cleaned_data["last_name"]
+        user.username = self.cleaned_data["username"]
         if commit:
             user.save()
         return user
