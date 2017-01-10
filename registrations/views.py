@@ -16,7 +16,7 @@ from django.utils import timezone
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Users
+
 
 
 class LoginFormView(FormView):
