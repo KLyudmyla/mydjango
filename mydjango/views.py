@@ -51,7 +51,7 @@ def registration(request):
             email = form.cleaned_data['email']
             salt = hashlib.sha1(str(random.random()).encode()).hexdigest()[:5]
             activation_key = hashlib.sha1((salt + email).encode()).hexdigest()
-            key_expires = datetime.datetime.now() + datetime.timedelta(minutes=5)
+            key_expires = datetime.datetime.now() + datetime.timedelta(hours=48)
             # Create and save temp_user profile
             new_profile = TempUserProfile(username=username,
                                           email=email,
