@@ -3,7 +3,7 @@ from django.contrib import admin
 from .views import index
 #from registrations.views import RegisterFormView, LoginFormView, LogoutView, register_confirm
 from django.conf import settings
-from registrations.views import LoginFormView,
+from registrations.views import LoginFormView
 from . import views
 
 
