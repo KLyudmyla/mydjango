@@ -34,6 +34,28 @@
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
+<form name="form" id="form" class="form-horizontal" method="POST" action=".">
+       {% csrf_token %}
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            {{ form.username }}
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            {{ form.password }}
+        </div>
+
+        <div class="form-group">
+
+            <div class="col-sm-12 controls">
+
+                <button type="submit" href="#" class="btn btn-primary ">Войти </button>
+                <a href="{% url 'login' %}">Войти</a>
+            </div>
+        </div>
+
+    </form>
 
 {% endblock content %}
 
