@@ -17,10 +17,10 @@ def index(request):
     return render (request, "index.html")
 
 
-def logout(request):
-    auth.logout(request)
-    messages.error(request, 'You are logout', extra_tags='info')
-    return redirect('index')
+#def logout(request):
+#    auth.logout(request)
+#    messages.error(request, 'You are logout', extra_tags='info')
+#    return redirect('index')
 
 def registration(request):
     if request.method == 'POST':
