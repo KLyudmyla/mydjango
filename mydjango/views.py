@@ -17,27 +17,6 @@ def index(request):
     return render (request, "index.html")
 
 
-def login(request):
-    if request.user.is_authenticated():
-        messages.warning(request, 'Bro, you already have logined in, don\'t do it', extra_tags='warning')
-        return redirect('index')
-    if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        user = auth.authenticate(email=email, password=password)
-        if user is not None and user.is_active:
-            # Правильный пароль и пользователь "активен"
-            auth.login(request, user)
-            # Перенаправление на "правильную" страницу
-            messages.error(request, 'Congratulations you have logined  successfully to our site', extra_tags='success')
-            return redirect("index")
-        else:
-            # Отображение страницы с ошибкой
-            messages.error(request, 'Please, try again', extra_tags='danger')
-            return redirect('login')
-    else:
-        return render(request, 'login.html')
-
 def logout(request):
     auth.logout(request)
     messages.error(request, 'You are logout', extra_tags='info')
