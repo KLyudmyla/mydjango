@@ -1,27 +1,82 @@
-from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render
-
-
+import datetime
 import hashlib
 import random
-
-
-#from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponseRedirect
-from django.views.generic.base import View
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.models import User
-
-from django.utils import timezone
-from django.core.mail import send_mail
+from django.contrib import auth
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils import timezone
+
+from registrations.forms import FirstForm
+from registrations.models import TempUserProfile
 
 
 
 def index(request):
     return render (request, "index.html")
+
+
+def login(request):
+    if request.user.is_authenticated():
+        messages.warning(request, 'Bro, you already have logined in, don\'t do it', extra_tags='warning')
+        return redirect('index')
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        user = auth.authenticate(email=email, password=password)
+        if user is not None and user.is_active:
+            # Правильный пароль и пользователь "активен"
+            auth.login(request, user)
+            # Перенаправление на "правильную" страницу
+            messages.error(request, 'Congratulations you have logined  successfully to our site', extra_tags='success')
+            return redirect("index")
+        else:
+            # Отображение страницы с ошибкой
+            messages.error(request, 'Please, try again', extra_tags='danger')
+            return redirect('login')
+    else:
+        return render(request, 'login.html')
+
+def logout(request):
+    auth.logout(request)
+    messages.error(request, 'You are logout', extra_tags='info')
+    return redirect('index')
+
+def registration(request):
+    if request.method == 'POST':
+        form = FirstForm(request.POST)
+        if form.is_valid() and form.cleaned_data['password1'] == form.cleaned_data['password2']:
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            salt = hashlib.sha1(str(random.random()).encode()).hexdigest()[:5]
+            activation_key = hashlib.sha1((salt + email).encode()).hexdigest()
+            key_expires = datetime.datetime.now() + datetime.timedelta(minutes=5)
+            # Create and save temp_user profile
+            new_profile = TempUserProfile(username=username,
+                                          email=email,
+                                          activation_key=activation_key,
+                                          key_expires=key_expires,
+                                          first_name=form.cleaned_data['first_name'],
+                                          last_name=form.cleaned_data['last_name'],
+                                          password1=form.cleaned_data['password1'],
+                                          password2=form.cleaned_data['password2']
+                                          )
+            new_profile.save()
+            # Send email with activation key
+            email_subject = 'Подтверждение регистрации'
+            email_body = "Hey %s, thanks for signing up. To activate your account, click this link within \
+            5 minutes https://http://mydjango.pythonanywhere.com//accounts/confirm/%s" % (username, activation_key)
+            send_mail(email_subject, email_body, from_email='kaluzhynoval@gmail.com', recipient_list=[kaluzhynova@gmail.com, vlyuda@mail.ru],
+                      fail_silently=False)
+            messages.success(request, "For success registered we send you email.\n Please confirm your email",
+                             extra_tags='info')
+            return redirect('index')
+        else:
+            messages.error(request, "Enter valid info. Please, try again", extra_tags='danger')
+            return redirect('registration')
+    form = FirstForm()
+    return render(request, 'registration.html', {'form': form})
 
 def register_confirm(request, activation_key):
     """
@@ -50,6 +105,10 @@ def register_confirm(request, activation_key):
     user_profile.delete()
     messages.success(request, 'Your email confirmed and you are success registered! Please login in.', extra_tags='success')
     return redirect('index')
+
+
+
+
 
 
 

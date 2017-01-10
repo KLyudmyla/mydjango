@@ -1,43 +1,27 @@
-
 from django import forms
+from .models import TempUserProfile
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-from .models import Users
 
-class UserCreateForm(UserCreationForm):
 
-    username = forms.CharField(required=True)
-    email = forms.EmailField(required=True)
-    first_name = forms.CharField(required=True)
-    last_name = forms.CharField(required=True)
+class FirstForm(forms.ModelForm):
     class Meta:
-        model = Users
-        fields = ("username", "first_name", "last_name", "email", "password1", "password2")
+        model = TempUserProfile
+        exclude = ['activation_key', 'key_expires']
         widgets = {
-    #        'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Set password'}),
-    #        'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm password'}),
+            'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Set password'}),
+            'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm password'}),
             'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Name'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Surname'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'})
         }
-    def __init__(self, *args, **kwargs):
-        super(UserCreateForm, self).__init__(*args, **kwargs)
-
-    
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['placeholder'] = 'Set password'
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['placeholder'] = 'Confirm password'    
-
-
-    def save(self, commit=True):
-        user = super(UserCreateForm, self).save(commit=False)
-        user.email = self.cleaned_data["email"]
-        user.first_name = self.cleaned_data["first_name"]
-        user.last_name = self.cleaned_data["last_name"]
-        user.username = self.cleaned_data["username"]
-        if commit:
-            user.save()
-        return user
-
+    def clean_email(self):
+        """
+        clean email field
+        """
+        email = self.cleaned_data["email"]
+        try:
+            User._default_manager.get(email=email)
+        except User.DoesNotExist:
+            return email
+        raise forms.ValidationError('Такой адрес электронной почты уже зарегестрирован.')

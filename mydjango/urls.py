@@ -1,16 +1,17 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from .views import index
-from registrations.views import RegisterFormView, LoginFormView, LogoutView, register_confirm
+#from registrations.views import RegisterFormView, LoginFormView, LogoutView, register_confirm
+from django.conf import settings
 from . import views
 
 
 urlpatterns = [
     url(r'^$', index, name='index'),
-#    url('^', include('django.contrib.auth.urls')),
-    url(r'^register/$', RegisterFormView.as_view(), name = 'register'),
-    url(r'^login/$', LoginFormView.as_view(), name = 'login'),
-    url(r'^logout/$', LogoutView.as_view(), name = 'logout'),
+    url(r'^login/$',  views.login, name='login'),
+    url(r'^logout/$', views.logout, name='logout'),
+    url(r'^registration/$', views.registration, name='registration'),
+    url(r'^accounts/confirm/(?P<activation_key>\w+)', views.register_confirm,),
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/confirm/(?P<activation_key>\w+)', register_confirm,)
+
 ]
