@@ -27,7 +27,7 @@ class LoginFormView(FormView):
     def form_valid(self, form):
         self.user = form.get_user()
         login(self.request, self.user)
-        messages.error(request, 'Congratulations you have logined  successfully to our site', extra_tags='success')
+        messages.error(self.request, 'Congratulations you have logined  successfully to our site', extra_tags='success')
         return super(LoginFormView, self).form_valid(form)
 
 class LogoutView(View):
