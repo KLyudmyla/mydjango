@@ -4,36 +4,6 @@
 
 {% block content %}
 
-    {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% else %}
-    <p>Please login to see this page.</p>
-    {% endif %}
-{% endif %}
-
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
-
-<input type="submit" value=" Войти " />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
-
 <form name="form" id="form" class="form-horizontal" method="POST" action=".">
        {% csrf_token %}
         <div class="input-group">
@@ -51,7 +21,7 @@
             <div class="col-sm-12 controls">
 
                 <button type="submit" href="#" class="btn btn-primary ">Войти </button>
-                <a href="{% url 'login' %}">Войти</a>
+
             </div>
         </div>
 
