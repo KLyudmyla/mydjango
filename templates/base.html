@@ -15,49 +15,46 @@
   </head>
   <body>
  
-<div class="container">
-     <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-               
-          <li class = {% block nav_class_index %}   {% endblock %}><a href="{% url 'index'%}">Главная</a></li>
-          <li class = {% block nav_class_register %}   {% endblock %}><a href="{% url 'registration'%}">Регистрация</a></li>
-          <li class = {% block nav_class_login %}   {% endblock %}><a href="{% url 'login'%}">Войти</a></li>
-          <li class = {% block nav_class_logout %}   {% endblock %}><a href="{% url 'logout'%}">Выйти</a></li>
+	<div class="container">
+	    <nav class="navbar navbar-default">
+	    <div class="container-fluid">
+	        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	            <ul class="nav navbar-nav">
+	               
+		            <li class = {% block nav_class_index %}   {% endblock %}><a href="{% url 'index'%}">Главная</a></li>
+		                    
+		            {% if user.is_authenticated %}
+		                <li class = {% block nav_class_profile %}   {% endblock %}><a href="{% url 'profile'%}">Личный кабинет</a></li>
+		                <li class = {% block nav_class_logout %}   {% endblock %}><a href="{% url 'logout'%}">Выйти</a></li>
+		            {% else %}
+		 	            <li class = {% block nav_class_register %}   {% endblock %}><a href="{% url 'registration'%}">Регистрация</a></li>
+		                <li class = {% block nav_class_login %}   {% endblock %}><a href="{% url 'login'%}">Войти</a></li>
+		            {% endif %}
+	            </ul>
+	        </div><!-- /.navbar-collapse -->
+	    </div><!-- /.container-fluid -->
+	    </nav>
+	  
+	    <!-- Main jumbotron for a primary marketing message or call to action -->
+	 
+	        
+	    <div class="container">
+	    {% if messages %}
+	        <div class="messages">
+	            {% for msg in messages %}
+	                <div class="alert alert-{{ msg.tags }} alert-dismissible" role="alert">
+	                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                    {{msg.message}}
+	                </div>
+	            {% endfor %}
+	        </div>
+	    {% endif %}
+	    {% block content %}    {% endblock content %}
+	    </div><!-- /.container -->
 
 
-         </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-  
-    <!-- Main jumbotron for a primary marketing message or call to action -->
- 
-        
-    <div class="container">
-    {% if user.is_authenticated %}
-  <p>Добро пожаловать, {{ user.username }}. Спасибо, что не забываете нас.</p>
-{% else %}
-  <p>Добро пожаловать, незнакомец. Кто вы?</p>
-{% endif %}
-
-{% if messages %}
-        <div class="messages">
-            {% for msg in messages %}
-                <div class="alert alert-{{ msg.tags }} alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    {{msg.message}}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-    {% block content %}    {% endblock content %}
-    </div><!-- /.container -->
-
-
-   
-</div>
+	   
+	</div>
 
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>

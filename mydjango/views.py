@@ -16,6 +16,9 @@ from registrations.models import TempUserProfile
 def index(request):
     return render (request, "index.html")
 
+def profile(request):
+    return render (request, "profile.html")
+
 
 #def logout(request):
 #    auth.logout(request)
