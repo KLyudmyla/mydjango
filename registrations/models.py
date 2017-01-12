@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-class TempUserProfile(models.Model):
+class UserProfile(models.Model):
     username = models.CharField(max_length=16)
     first_name = models.CharField(max_length=16)
     last_name = models.CharField(max_length=16)

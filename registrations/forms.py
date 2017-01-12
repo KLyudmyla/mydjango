@@ -1,11 +1,11 @@
 from django import forms
-from .models import TempUserProfile
+from .models import UserProfile
 from django.contrib.auth.models import User
 
 
 class FirstForm(forms.ModelForm):
     class Meta:
-        model = TempUserProfile
+        model = UserProfile
         exclude = ['activation_key', 'key_expires']
         widgets = {
             'password1': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Set password'}),
