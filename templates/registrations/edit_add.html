@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+ <div class="jumbotron">
+   {% for message in messages %}
+     <li{% if message.tags %} class="{{ massage.tags }}" {% endif %}>{{ message }}</li>
+   {% endfor %}
+</div>
+</ul>
+{% endif %}
+      
+ <div class="blog-post">
+  <h2>Редактировать данные</h2>
+
+   <div class="panel-body" style="width: 50%">
+    <form name="form" id="form" class="form-horizontal" method="POST" action=".">
+       {% csrf_token %}
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+             <img src="../../../{{ user.userprofile.avatar }}" alt="" width="150px"/>
+             <p>{{ form.avatar }}</p>
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
+            {{ form.date_of_birth }}
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-tasks"></i></span>
+            {{ form.job }}
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-education"></i></span>
+            {{ form.education }}
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-tags"></i></span>
+            {{ form.description }}
+        </div>
+
+        <div class="form-group">
+
+            <div class="col-sm-12 controls">
+
+                <button type="submit" href="#" class="btn btn-primary ">Сохранить  </button>
+
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% endblock content %}
+
+

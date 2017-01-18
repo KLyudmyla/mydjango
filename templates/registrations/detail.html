@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %} Личный кабинет {% endblock title %}
+
+{% block content %}
+    {% load static %}
+
+  <h1>{{ user.username }} </h1>
+    <img src="../../{{ user.userprofile.avatar }}" alt="" width="100px"/>
+    <div class="media">
+
+      <div class="media-body">
+         <h2>Личная информация </h2>
+         <div class="blog-post">
+            <table class="table table-bordered", style="width: 50%">    
+                <tr><td class="student_info">Имя Фамилия</td><td>{{ user.first_name }} {{ user.last_name }}</td></tr>
+                <tr><td class="student_info">email</td><td>{{ user.email }}</td></tr>
+            </table>
+          </div><!-- /.blog-post --> 
+                 
+                 <a href="{% url 'registrations:edit' user.id %}"><button type="button" class="btn btn-primary"> Редактировать </button></a>
+
+        <h2>Дополнительная информация </h2>
+        <div class="blog-post">
+            <table class="table table-bordered", style="width: 50%">     
+                {% if user.userprofile.date_of_birth %}
+                   <tr><td class="student_info">дата рождения</td><td>{{ user.userprofile.date_of_birth}}</td></tr>
+                {% endif %}
+
+                {% if user.userprofile.education %}
+                   <tr><td class="student_info">Образование</td><td>{{ user.userprofile.education }}</td></tr>
+                {% endif %}            
+                {% if user.userprofile.job %}
+                   <tr><td class="student_info">Место работы</td><td>{{ user.userprofile.job }}</td></tr>
+                {% endif %}            
+            </table>
+          </div><!-- /.blog-post -->  
+
+          <a href="{% url 'registrations:edit_add' user.userprofile.id %}"><button type="button" class="btn btn-primary"> Редактировать </button></a>
+      </div>
+  </div>
+
+{% endblock content %}
+
+
+

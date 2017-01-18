@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+ <div class="jumbotron">
+   {% for message in messages %}
+     <li{% if message.tags %} class="{{ massage.tags }}" {% endif %}>{{ message }}</li>
+   {% endfor %}
+</div>
+</ul>
+{% endif %}
+      
+ <div class="blog-post">
+  <h2>Редактировать данные</h2>
+
+  <div class="panel-body" style="width: 50%">
+
+    <form method="post">
+       {% csrf_token %}
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            {{ form.username }}
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            {{ form.first_name}}
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            {{ form.last_name }}
+        </div>
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+            {{ form.email }}
+        </div>
+
+        <div class="form-group">
+
+            <div class="col-sm-12 controls">
+
+             <input type="submit" value = "Изменить"/>
+
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% endblock content %}
+
+

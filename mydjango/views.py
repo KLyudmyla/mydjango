@@ -9,15 +9,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
 from registrations.forms import FirstForm
-from registrations.models import UserProfile
+from registrations.models import TempUserProfile
 
 
 
 def index(request):
     return render (request, "index.html")
-
-def profile(request):
-    return render (request, "profile.html")
 
 
 #def logout(request):
@@ -35,7 +32,7 @@ def registration(request):
             activation_key = hashlib.sha1((salt + email).encode()).hexdigest()
             key_expires = datetime.datetime.now() + datetime.timedelta(hours=48)
             # Create and save temp_user profile
-            new_profile = UserProfile(username=username,
+            new_profile = TempUserProfile(username=username,
                                           email=email,
                                           activation_key=activation_key,
                                           key_expires=key_expires,
@@ -68,7 +65,7 @@ def register_confirm(request, activation_key):
         messages.warning(request, 'Bro, you already have logined in, don\'t do it', extra_tags='warning')
         return redirect('index')
         # check if there is UserProfile which matches the activation key (if not then display 404)
-    user_profile = get_object_or_404(UserProfile, activation_key=activation_key)
+    user_profile = get_object_or_404(TempUserProfile, activation_key=activation_key)
     #check if the activation key has expired, if it hase then render confirm_expired.html
     if user_profile.key_expires < timezone.now():
         user_profile.delete()
@@ -87,6 +84,8 @@ def register_confirm(request, activation_key):
     user_profile.delete()
     messages.success(request, 'Your email confirmed and you are success registered! Please login in.', extra_tags='success')
     return redirect('index')
+
+
 
 
 
